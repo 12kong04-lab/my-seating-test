@@ -377,24 +377,28 @@ export default function App() {
                     const emoji = STUDENT_EMOJIS[studentIndex % STUDENT_EMOJIS.length];
                     
                     seatHtml = \`
-                        <div class="aspect-[4/3.5] bg-white/90 rounded-2xl p-2.5 shadow-md border-2 border-sky-400 flex flex-col justify-between items-center transition-all duration-150 hover:shadow-lg hover:scale-[1.02]">
-                            <div class="w-full flex justify-between items-center text-[10px] font-bold text-sky-400">
-                                <span>\${i + 1}번 자리</span>
-                                <span class="bg-sky-50 px-1 rounded">\${studentIndex + 1}번</span>
+                        <div class="aspect-[4/3.5] w-full">
+                            <div class="w-full h-full bg-white/90 rounded-2xl p-2 md:p-2.5 shadow-md border-2 border-sky-400 flex flex-col justify-between items-center transition-all duration-150 hover:shadow-lg hover:scale-[1.02] overflow-hidden">
+                                <div class="w-full flex justify-between items-center text-[8px] md:text-[10px] font-bold text-sky-400">
+                                    <span>\${i + 1}번 자리</span>
+                                    <span class="bg-sky-50 px-1 rounded text-[7px] md:text-[9px]">\${studentIndex + 1}번</span>
+                                </div>
+                                <div class="flex flex-col items-center min-h-0 min-w-0">
+                                    <span class="text-lg md:text-2xl mb-0.5 animate-bounce">\${emoji}</span>
+                                    <span class="text-[10px] md:text-sm font-jua text-sky-950 text-center truncate max-w-full font-bold">\${name}</span>
+                                </div>
+                                <div class="h-1 w-6 md:h-1.5 md:w-8 bg-sky-200 rounded-full"></div>
                             </div>
-                            <div class="flex flex-col items-center">
-                                <span class="text-xl md:text-2xl mb-1 animate-bounce">\${emoji}</span>
-                                <span class="text-sm md:text-base font-jua text-sky-950 text-center truncate max-w-full">\${name}</span>
-                            </div>
-                            <div class="h-1.5 w-8 bg-sky-200 rounded-full"></div>
                         </div>
                     \`;
                 } else {
                     // 빈자리 출력
                     seatHtml = \`
-                        <div class="aspect-[4/3.5] frosted rounded-2xl p-2.5 border-2 border-dashed border-sky-200 flex flex-col justify-center items-center opacity-60">
-                            <span class="text-[10px] font-bold text-sky-300 mb-1">\${i + 1}번 자리</span>
-                            <span class="text-xs text-sky-300 font-medium font-jua">🪑 빈자리</span>
+                        <div class="aspect-[4/3.5] w-full">
+                            <div class="w-full h-full frosted rounded-2xl p-2 md:p-2.5 border-2 border-dashed border-sky-200 flex flex-col justify-center items-center opacity-60 overflow-hidden">
+                                <span class="text-[8px] md:text-[10px] font-bold text-sky-300 mb-1">\${i + 1}번 자리</span>
+                                <span class="text-[10px] md:text-xs text-sky-300 font-bold font-jua">🪑 빈자리</span>
+                            </div>
                         </div>
                     \`;
                 }
@@ -664,40 +668,41 @@ export default function App() {
                           animate={{ scale: 1, opacity: 1 }}
                           exit={{ scale: 0.95, opacity: 0 }}
                           transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+                          className="aspect-[4/3.5] w-full"
                         >
                           {isOccupied ? (
                             // 학생이 있는 귀여운 책상 카드
                             <div 
-                              className="aspect-[4/3.5] bg-white/90 rounded-2xl p-2.5 shadow-md border-2 border-sky-400 flex flex-col justify-between items-center transition-all duration-200 hover:shadow-lg hover:scale-[1.03] relative overflow-hidden"
+                              className="w-full h-full bg-white/90 rounded-2xl p-2 md:p-2.5 shadow-md border-2 border-sky-400 flex flex-col justify-between items-center transition-all duration-200 hover:shadow-lg hover:scale-[1.03] relative overflow-hidden"
                             >
                               {/* 자리 번호 및 학생 순번 표시 */}
-                              <div className="w-full flex justify-between items-center text-[9px] md:text-[10px] font-extrabold text-sky-400">
+                              <div className="w-full flex justify-between items-center text-[8px] md:text-[10px] font-extrabold text-sky-400">
                                 <span>{seatIndex + 1}번 자리</span>
-                                <span className="bg-sky-50 px-1 py-0.5 rounded-md text-[8px] md:text-[9px]">
+                                <span className="bg-sky-50 px-1 py-0.5 rounded-md text-[7px] md:text-[9px]">
                                   {studentIndex! + 1}번 친구
                                 </span>
                               </div>
                               
                               {/* 중앙 이모지 & 학생 이름 */}
-                              <div className="flex flex-col items-center">
-                                <span className={`text-xl md:text-3xl mb-1 ${isShuffling ? 'animate-pulse scale-90' : 'animate-bounce'}`}>
+                              <div className="flex flex-col items-center min-h-0 min-w-0">
+                                <span className={`text-lg md:text-2xl mb-0.5 ${isShuffling ? 'animate-pulse scale-90' : 'animate-bounce'}`}>
                                   {STUDENT_EMOJIS[studentIndex! % STUDENT_EMOJIS.length]}
                                 </span>
-                                <span className="text-xs md:text-base font-jua text-sky-950 text-center truncate max-w-full font-bold">
+                                <span className="text-[10px] md:text-sm font-jua text-sky-950 text-center truncate max-w-full font-bold">
                                   {studentNames[studentIndex!] || `학생 ${studentIndex! + 1}`}
                                 </span>
                               </div>
 
                               {/* 서랍 장식 라인 */}
-                              <div className="h-1.5 w-8 bg-sky-200 rounded-full"></div>
+                              <div className="h-1 w-6 md:h-1.5 md:w-8 bg-sky-200 rounded-full"></div>
                             </div>
                           ) : (
                             // 빈 책상 카드
                             <div 
-                              className="aspect-[4/3.5] frosted rounded-2xl p-2.5 border-2 border-dashed border-sky-200 flex flex-col justify-center items-center opacity-60"
+                              className="w-full h-full frosted rounded-2xl p-2 md:p-2.5 border-2 border-dashed border-sky-200 flex flex-col justify-center items-center opacity-60"
                             >
-                              <span className="text-[9px] md:text-[10px] font-extrabold text-sky-300 mb-1">{seatIndex + 1}번 자리</span>
-                              <span className="text-xs text-sky-300 font-bold font-jua">🪑 빈자리</span>
+                              <span className="text-[8px] md:text-[10px] font-extrabold text-sky-300 mb-1">{seatIndex + 1}번 자리</span>
+                              <span className="text-[10px] md:text-xs text-sky-300 font-bold font-jua">🪑 빈자리</span>
                             </div>
                           )}
                         </motion.div>
